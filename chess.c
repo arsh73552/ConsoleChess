@@ -20,10 +20,10 @@ int main()
   setup(board);
   while(true)
   {
-    display(board);
-    if(!make_move(board))
+    display(board); // Display the board
+    if(!make_move(board)) // Check if Move is possible.
     {
-      if(warning==0 || warning==1)
+      if(warning==0 || warning==1) // If more than 2 Illegal moves are made, End game.
       {
         printf("Invalid move\nWarning %d\n", warning+1);
         warning++;
@@ -32,7 +32,7 @@ int main()
       printf("Invalid move!");
       return 0;
     }
-    if(game_over(board))
+    if(game_over(board)) // Check if Kings are still on the board, if so continue else end game.
     {
       printf("Game over!\n");
       display(board);
@@ -50,21 +50,21 @@ void setup(char *board[8][8])
       board[i][j]="     ";
     }
   }
-
-  board[0][0]="Ro(w)";
-  board[0][1]="Kn(w)";
-  board[0][2]="Bi(w)";
-  board[0][3]="Qu(w)";
-  board[0][4]="Ki(w)";
+  // Format: Piece_Abreviation(Piece_Color)
+  board[0][0]="Ro(w)"; // Rooks(White)
+  board[0][1]="Kn(w)"; // Knights(White)
+  board[0][2]="Bi(w)"; // Bishop(White)
+  board[0][3]="Qu(w)"; // Queen(White)
+  board[0][4]="Ki(w)"; // Kings(White)
   board[0][5]="Bi(w)";
   board[0][6]="Kn(w)";
   board[0][7]="Ro(w)";
 
-  board[7][0]="Ro(b)";
-  board[7][1]="Kn(b)";
-  board[7][2]="Bi(b)";
-  board[7][3]="Qu(b)";
-  board[7][4]="Ki(b)";
+  board[7][0]="Ro(b)"; // Rooks(Black)
+  board[7][1]="Kn(b)"; // Knights(Black)
+  board[7][2]="Bi(b)"; // Bishop(Black)
+  board[7][3]="Qu(b)"; // Queen(Black)
+  board[7][4]="Ki(b)"; // Kings(Black)
   board[7][5]="Bi(b)";
   board[7][6]="Kn(b)";
   board[7][7]="Ro(b)";
@@ -143,9 +143,8 @@ bool make_move(char *board[8][8])
 
   if(final_x_coordinates>7 || final_x_coordinates<0 || final_y_coordinates>7 || final_y_coordinates<0 || initial_x_coordinates>7 || initial_x_coordinates<0 || initial_y_coordinates>7 || initial_y_coordinates<0)
   {
-    return false;
+    return false; // Make sure move isn't out of bounds.
   }
-// Sorry you had to look at that.
 
   for(int i=0;i<2;i++) //Copying input piece name.
   {
@@ -200,7 +199,7 @@ bool check_if_move(char *piece,int initial_x_coordinates, int initial_y_coordina
 
   if(!piece_block(piece,initial_x_coordinates,initial_y_coordinates,final_x_coordinates,final_y_coordinates,board))
   {
-    if (!strcasecmp(piece,"Pa")) // Pawn implementation x
+    if (!strcasecmp(piece,"Pa")) // Pawn implementation 
     {
       if(final_x_coordinates!=initial_x_coordinates)
       {
@@ -217,8 +216,8 @@ bool check_if_move(char *piece,int initial_x_coordinates, int initial_y_coordina
           else
           {
             counter++;
-            return true;
-          }
+            return true; 
+          } 
         }
         return false;
       }
@@ -257,7 +256,7 @@ bool check_if_move(char *piece,int initial_x_coordinates, int initial_y_coordina
           }
        }
     }
-    if (!strcasecmp(piece,"Ro")) // Rook implementation x
+    if (!strcasecmp(piece,"Ro")) // Rook implementation 
     {
       if(initial_x_coordinates==final_x_coordinates)
         {
@@ -272,7 +271,7 @@ bool check_if_move(char *piece,int initial_x_coordinates, int initial_y_coordina
       else
         return false;
     }
-    if (!strcasecmp(piece,"Bi")) // Bishop implementation x
+    if (!strcasecmp(piece,"Bi")) // Bishop implementation 
     {
       for(int i=1;i<8;i++)
       {
@@ -287,7 +286,7 @@ bool check_if_move(char *piece,int initial_x_coordinates, int initial_y_coordina
       }
       return false;
     }
-    if (!strcasecmp(piece,"Ki")) // King implementation x
+    if (!strcasecmp(piece,"Ki")) // King implementation 
     {
       int move_length = floor(sqrt(pow((final_x_coordinates-initial_x_coordinates),2)+pow((final_y_coordinates-initial_y_coordinates),2)));
       if (move_length==1)
@@ -300,7 +299,7 @@ bool check_if_move(char *piece,int initial_x_coordinates, int initial_y_coordina
         return false;
       }
     }
-    if (!strcasecmp(piece,"Qu")) // Queen implementation x
+    if (!strcasecmp(piece,"Qu")) // Queen implementation 
     {
       for(int i=1;i<8;i++)
       {
@@ -326,7 +325,7 @@ bool check_if_move(char *piece,int initial_x_coordinates, int initial_y_coordina
       else
         return false;
     }
-    if (!strcasecmp(piece,"Kn")) // Knight implementation x
+    if (!strcasecmp(piece,"Kn")) // Knight implementation 
     {
       if(final_x_coordinates==initial_x_coordinates+2 || final_x_coordinates==initial_x_coordinates-2)
       {
@@ -356,17 +355,17 @@ bool check_if_move(char *piece,int initial_x_coordinates, int initial_y_coordina
 }
 bool piece_block(char *piece,int initial_x_coordinates, int initial_y_coordinates, int final_x_coordinates, int final_y_coordinates,char *board[8][8])
 {
-  if(!strcasecmp(piece,"Pa")) // Pawn movement block x
+  if(!strcasecmp(piece,"Pa")) // Pawn movement block 
   {
     if(initial_x_coordinates==final_x_coordinates)
     {
       if(strcmp(board[final_y_coordinates][final_x_coordinates],"     ")!=0)
       {
-        return true;
+        return true; // Ensure that pawn is moving to an empty square if walking forward.
       }
       if(abs(final_y_coordinates-initial_y_coordinates)==2)
       {
-        if(strcmp(board[final_y_coordinates-1+2*(counter%2)][final_x_coordinates],"     ")!=0)
+        if(strcmp(board[final_y_coordinates-1+2*(counter%2)][final_x_coordinates],"     ")!=0) // Ensure that pawn isn't walking over pieces in case of a first 2-step move.
         {
           return true;
         }
@@ -374,7 +373,7 @@ bool piece_block(char *piece,int initial_x_coordinates, int initial_y_coordinate
     }
     return false;
   }
-  if(!strcasecmp(piece,"Ro")) // Rook movement block x
+  if(!strcasecmp(piece,"Ro")) // Rook movement block 
   {
     here:
     if(final_x_coordinates==initial_x_coordinates)
@@ -383,7 +382,7 @@ bool piece_block(char *piece,int initial_x_coordinates, int initial_y_coordinate
       {
         if(strcmp(board[i][initial_x_coordinates],"     "))
         {
-          return true;
+          return true; // check all squares from initial square to final square in a straight line to ensure that the piece isn't being blocked.
         }
       }
     }
@@ -393,7 +392,7 @@ bool piece_block(char *piece,int initial_x_coordinates, int initial_y_coordinate
       {
         if(strcmp(board[initial_y_coordinates][i],"     "))
         {
-          return true;
+          return true; // check all squares from initial square to final square in a straight line to ensure that the piece isn't being blocked.
         }
       }
     }
@@ -403,7 +402,7 @@ bool piece_block(char *piece,int initial_x_coordinates, int initial_y_coordinate
     }
     return false;
   }
-  if(!strcasecmp(piece,"Bi")) // Bishop movement block x
+  if(!strcasecmp(piece,"Bi")) // Bishop movement block 
   {
     there: ;
     int i = initial_x_coordinates;
@@ -431,7 +430,7 @@ bool piece_block(char *piece,int initial_x_coordinates, int initial_y_coordinate
           }
           if(strcmp(board[j][i],"     "))
           {
-            return true;
+            return true; // check all diagonal elements to ensure that the bishop isn't being blocked.
           }
           if(i>=8 || j>=8)
           {
@@ -479,24 +478,24 @@ bool piece_block(char *piece,int initial_x_coordinates, int initial_y_coordinate
     }
     return true;
   }
-  if(!strcasecmp(piece,"Ki")) // King movement block x
+  if(!strcasecmp(piece,"Ki")) // King movement block 
   {
     return false;
   }
-  if(!strcasecmp(piece,"Qu")) // Queen movement block x
+  if(!strcasecmp(piece,"Qu")) // Queen movement block 
   {
-    if(final_x_coordinates == initial_x_coordinates || final_y_coordinates == initial_y_coordinates)
+    if(final_x_coordinates == initial_x_coordinates || final_y_coordinates == initial_y_coordinates) // If X coordinates/Y Coordinates dont change check rook implementation
     {
       goto here;
     }
     else
     {
-      goto there;
+      goto there; // IF Y coordinates/ X coordinates do change check Bishop Implementation.
     }
   }
-  if(!strcasecmp(piece,"Kn")) // Knight movement block x
+  if(!strcasecmp(piece,"Kn")) // Knight movement block 
   {
-    return false;
+    return false; // Knights can jump over pieces.
   }
   return false;
 }
