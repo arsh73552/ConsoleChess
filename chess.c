@@ -199,7 +199,7 @@ bool check_if_move(char *piece,int initial_x_coordinates, int initial_y_coordina
 
   if(!piece_block(piece,initial_x_coordinates,initial_y_coordinates,final_x_coordinates,final_y_coordinates,board))
   {
-    if (!strcasecmp(piece,"Pa")) // Pawn implementation 
+    if (!strcasecmp(piece,"Pa")) // Pawn implementation
     {
       if(final_x_coordinates!=initial_x_coordinates)
       {
@@ -216,8 +216,8 @@ bool check_if_move(char *piece,int initial_x_coordinates, int initial_y_coordina
           else
           {
             counter++;
-            return true; 
-          } 
+            return true;
+          }
         }
         return false;
       }
@@ -256,7 +256,7 @@ bool check_if_move(char *piece,int initial_x_coordinates, int initial_y_coordina
           }
        }
     }
-    if (!strcasecmp(piece,"Ro")) // Rook implementation 
+    if (!strcasecmp(piece,"Ro")) // Rook implementation
     {
       if(initial_x_coordinates==final_x_coordinates)
         {
@@ -271,7 +271,7 @@ bool check_if_move(char *piece,int initial_x_coordinates, int initial_y_coordina
       else
         return false;
     }
-    if (!strcasecmp(piece,"Bi")) // Bishop implementation 
+    if (!strcasecmp(piece,"Bi")) // Bishop implementation
     {
       for(int i=1;i<8;i++)
       {
@@ -286,7 +286,7 @@ bool check_if_move(char *piece,int initial_x_coordinates, int initial_y_coordina
       }
       return false;
     }
-    if (!strcasecmp(piece,"Ki")) // King implementation 
+    if (!strcasecmp(piece,"Ki")) // King implementation
     {
       int move_length = floor(sqrt(pow((final_x_coordinates-initial_x_coordinates),2)+pow((final_y_coordinates-initial_y_coordinates),2)));
       if (move_length==1)
@@ -299,7 +299,7 @@ bool check_if_move(char *piece,int initial_x_coordinates, int initial_y_coordina
         return false;
       }
     }
-    if (!strcasecmp(piece,"Qu")) // Queen implementation 
+    if (!strcasecmp(piece,"Qu")) // Queen implementation
     {
       for(int i=1;i<8;i++)
       {
@@ -325,7 +325,7 @@ bool check_if_move(char *piece,int initial_x_coordinates, int initial_y_coordina
       else
         return false;
     }
-    if (!strcasecmp(piece,"Kn")) // Knight implementation 
+    if (!strcasecmp(piece,"Kn")) // Knight implementation
     {
       if(final_x_coordinates==initial_x_coordinates+2 || final_x_coordinates==initial_x_coordinates-2)
       {
@@ -355,7 +355,7 @@ bool check_if_move(char *piece,int initial_x_coordinates, int initial_y_coordina
 }
 bool piece_block(char *piece,int initial_x_coordinates, int initial_y_coordinates, int final_x_coordinates, int final_y_coordinates,char *board[8][8])
 {
-  if(!strcasecmp(piece,"Pa")) // Pawn movement block 
+  if(!strcasecmp(piece,"Pa")) // Pawn movement block
   {
     if(initial_x_coordinates==final_x_coordinates)
     {
@@ -373,7 +373,7 @@ bool piece_block(char *piece,int initial_x_coordinates, int initial_y_coordinate
     }
     return false;
   }
-  if(!strcasecmp(piece,"Ro")) // Rook movement block 
+  if(!strcasecmp(piece,"Ro")) // Rook movement block
   {
     here:
     if(final_x_coordinates==initial_x_coordinates)
@@ -402,7 +402,7 @@ bool piece_block(char *piece,int initial_x_coordinates, int initial_y_coordinate
     }
     return false;
   }
-  if(!strcasecmp(piece,"Bi")) // Bishop movement block 
+  if(!strcasecmp(piece,"Bi")) // Bishop movement block
   {
     there: ;
     int i = initial_x_coordinates;
@@ -478,11 +478,11 @@ bool piece_block(char *piece,int initial_x_coordinates, int initial_y_coordinate
     }
     return true;
   }
-  if(!strcasecmp(piece,"Ki")) // King movement block 
+  if(!strcasecmp(piece,"Ki")) // King movement block
   {
     return false;
   }
-  if(!strcasecmp(piece,"Qu")) // Queen movement block 
+  if(!strcasecmp(piece,"Qu")) // Queen movement block
   {
     if(final_x_coordinates == initial_x_coordinates || final_y_coordinates == initial_y_coordinates) // If X coordinates/Y Coordinates dont change check rook implementation
     {
@@ -493,7 +493,7 @@ bool piece_block(char *piece,int initial_x_coordinates, int initial_y_coordinate
       goto there; // IF Y coordinates/ X coordinates do change check Bishop Implementation.
     }
   }
-  if(!strcasecmp(piece,"Kn")) // Knight movement block 
+  if(!strcasecmp(piece,"Kn")) // Knight movement block
   {
     return false; // Knights can jump over pieces.
   }
