@@ -78,6 +78,7 @@ void setup(char *board[8][8])
 }
 void display(char *board[8][8])
 {
+  printf("--------------------------------------------------\n");
   printf(" |  a  |  b  |  c  |  d  |  e  |  f  |  g  |  h  |\n");
   for(int i=0;i<8;i++)  //2x for loop printing the board with aesthetic changes.
   {
@@ -88,6 +89,7 @@ void display(char *board[8][8])
     }
     printf("\n");
   }
+  printf("--------------------------------------------------\n");
   printf("\n\n");
 }
 bool game_over(char *board[8][8])
@@ -288,7 +290,9 @@ bool check_if_move(char *piece,int initial_x_coordinates, int initial_y_coordina
     }
     if (!strcasecmp(piece,"Ki")) // King implementation
     {
-      int move_length = floor(sqrt(pow((final_x_coordinates-initial_x_coordinates),2)+pow((final_y_coordinates-initial_y_coordinates),2)));
+      int tempx = (final_x_coordinates-initial_x_coordinates);
+      int tempy = (final_y_coordinates-initial_y_coordinates);
+      int move_length = floor(sqrt(tempx*tempx + tempy*tempy));
       if (move_length==1)
       {
         counter++;
@@ -405,78 +409,24 @@ bool piece_block(char *piece,int initial_x_coordinates, int initial_y_coordinate
   if(!strcasecmp(piece,"Bi")) // Bishop movement block
   {
     there: ;
-    int i = initial_x_coordinates;
-    int j = initial_y_coordinates;
-
-    if(final_x_coordinates>initial_x_coordinates)
+    int InitialTempX = initial_x_coordinates;
+    int InitialTempY = initial_y_coordinates;
+    int ChangeinX = 1;
+    int ChangeinY = 1;
+    if(final_x_coordinates < initial_x_coordinates)
+      ChangeinX = -1;
+    if(final_y_coordinates < initial_y_coordinates)
+      ChangeinY = -1;
+    InitialTempX = InitialTempX + ChangeinX;
+    InitialTempY = InitialTempY + ChangeinY;
+    while(InitialTempX != final_x_coordinates)
     {
-
-        int temp=0;
-        if(initial_y_coordinates>final_y_coordinates)
-        {
-          temp=1;
-        }
-
-        while(i!=final_x_coordinates && j!=final_y_coordinates)
-        {
-          i++;
-          if(temp==0)
-          {
-            j++;
-          }
-          if(temp==1)
-          {
-            j--;
-          }
-          if(strcmp(board[j][i],"     "))
-          {
-            return true; // check all diagonal elements to ensure that the bishop isn't being blocked.
-          }
-          if(i>=8 || j>=8)
-          {
-            break;
-          }
-        }
-        if(final_x_coordinates==i && final_y_coordinates==j)
-        {
-          return false;
-        }
+      if(strcmp(board[InitialTempY][InitialTempX],"     "))
         return true;
+      InitialTempX = InitialTempX + ChangeinX;
+      InitialTempY = InitialTempY + ChangeinY;
     }
-    else
-    {
-      int temp=0;
-      if(initial_y_coordinates>final_y_coordinates)
-      {
-        temp=1;
-      }
-      while(i!=final_x_coordinates && j!=final_y_coordinates)
-      {
-        i--;
-        if(temp==0)
-        {
-          j++;
-        }
-        if(temp==1)
-        {
-          j--;
-        }
-        if(strcmp(board[j][i],"     "))
-        {
-          return true;
-        }
-        if(i>=8 || j>=8)
-        {
-          break;
-        }
-      }
-      if(final_x_coordinates==i && final_y_coordinates==j)
-      {
-        return false;
-      }
-      return true;
-    }
-    return true;
+    return false;
   }
   if(!strcasecmp(piece,"Ki")) // King movement block
   {
